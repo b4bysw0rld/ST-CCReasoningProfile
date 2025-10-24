@@ -18,6 +18,18 @@
             </div>
 
             <hr>
+            <h4>Reasoning Controls</h4>
+
+            <div class="flex-container alignitemscenter">
+                <small><strong>Max Reasoning Tokens:</strong></small>
+                <input type="number" id="ccMaxReasoningTokens" class="text_pole" min="100" max="2000" step="50" value="500" title="Limits reasoning generation to prevent continuing into full response. Recommended: 300-500" />
+            </div>
+
+            <small class="note">
+                <strong>Tip:</strong> Your Reasoning Profile should use your full character card and context, but add a system prompt instruction to stop after thinking (e.g., "After <think> tags, stop immediately. Do not continue with a response."). The Max Tokens setting provides a hard limit.
+            </small>
+
+            <hr>
             <h4>Behavior Settings</h4>
 
             <div class="flex-container checkbox">

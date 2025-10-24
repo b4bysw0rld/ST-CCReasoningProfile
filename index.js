@@ -56,6 +56,7 @@ function initExtSettings() {
     extension_settings.ccReasoning.onlyTriggerWhenUserLast = extension_settings.ccReasoning.onlyTriggerWhenUserLast || false;
     extension_settings.ccReasoning.isExtensionActive = extension_settings.ccReasoning.isExtensionActive || false;
     extension_settings.ccReasoning.includeReasoningInResponse = extension_settings.ccReasoning.includeReasoningInResponse || true;
+    extension_settings.ccReasoning.maxReasoningTokens = extension_settings.ccReasoning.maxReasoningTokens || 500;
 }
 
 function getExtSettings() {
@@ -395,6 +396,7 @@ function toggleExtensionState(state) {
     const $autoContinue = $('#ccAutoContinueAfterReasoning');
     const $onlyTriggerWhenUserLast = $('#ccOnlyTriggerWhenUserLast');
     const $includeReasoningInResponse = $('#ccIncludeReasoningInResponse');
+    const $maxReasoningTokens = $('#ccMaxReasoningTokens');
 
     settings = getExtSettings();
     let isAnySettingNull = false;
@@ -424,6 +426,7 @@ function toggleExtensionState(state) {
         $autoContinue.prop('checked', settings.autoContinueAfterReasoning);
         $onlyTriggerWhenUserLast.prop('checked', settings.onlyTriggerWhenUserLast);
         $includeReasoningInResponse.prop('checked', settings.includeReasoningInResponse);
+        $maxReasoningTokens.val(settings.maxReasoningTokens);
         isExtensionActive = settings.isExtensionActive;
         activeConnectionProfileName = $connectionProfilesSelect.find('option:selected').text();
         console.log(`${LOG_PREFIX} On load, active connection profile is: ${activeConnectionProfileName}`);
@@ -456,6 +459,11 @@ function toggleExtensionState(state) {
 
     $includeReasoningInResponse.off('change').on('change', (e) => {
         extension_settings.ccReasoning.includeReasoningInResponse = $includeReasoningInResponse.prop('checked');
+        saveSettingsDebounced();
+    });
+
+    $maxReasoningTokens.off('change').on('change', (e) => {
+        extension_settings.ccReasoning.maxReasoningTokens = parseInt($maxReasoningTokens.val()) || 500;
         saveSettingsDebounced();
     });
 
