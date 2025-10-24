@@ -1,0 +1,13 @@
+{
+    "display_name": "Chat Completion Reasoning Profile",
+    "loading_order": 100,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "author": "b4bysw0rld",
+    "version": "1.0.0",
+    "homePage": "https://github.com/b4bysw0rld/ST-CCReasoningProfile",
+    "auto_update": true,
+    "i18n": {}
+}
+

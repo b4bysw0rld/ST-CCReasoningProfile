@@ -1,0 +1,90 @@
+<div class="cc_reasoning_settings">
+    <div class="inline-drawer">
+        <div class="inline-drawer-toggle inline-drawer-header">
+            <b>Chat Completion Reasoning Profile</b>
+            <div class="flex-container checkbox">
+                <i id="ccReasoningPowerButton" class="fa-solid fa-power-off togglable menu_button margin0"></i>
+            </div>
+            <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+        </div>
+
+        <div class="inline-drawer-content">
+
+            <small class="flex-container">
+                <span class="flex-container alignitemscenter">
+                    <span class="alignitemscenter">
+                        💰 <strong>Save 60-80% on API costs!</strong> Use cheap models (Gemini) for reasoning, premium (Claude) for responses.
+                        ⚡ <strong>Get faster responses!</strong> Route reasoning to faster APIs/models.
+                    </span>
+                    <br>
+                    <span class="alignitemscenter">
+                        Works with your existing Chat Completion preset's Custom COT configuration.
+                        Full setup: See GETTING_STARTED.md or README-CC.md.
+                    </span>
+                </span>
+            </small>
+
+            <hr>
+
+            <div class="flex-container alignitemscenter">
+                <small><strong>Reasoning Profile:</strong> (Use a cheap/fast model like Gemini 2.5 Pro)</small>
+                <select id="ccReasoningProfileSelector" class="text_pole flex1 wide100p" placeholder="Select profile for Reasoning" value="" title="This Profile will be used for the Reasoning/Thinking step. Use a cheaper model here (e.g., Gemini 2.5 Pro) to save costs!"></select>
+            </div>
+
+            <hr>
+            <h4>Reasoning Settings</h4>
+
+            <div class="flex-container alignitemscenter">
+                <small><strong>Max Reasoning Tokens:</strong></small>
+                <input type="number" id="ccMaxReasoningTokens" class="text_pole" min="100" max="4000" step="50" title="Maximum tokens for the reasoning generation" />
+            </div>
+
+            <div class="flex-container alignitemscenter">
+                <small><strong>Reasoning Prefix Tag:</strong></small>
+                <input type="text" id="ccReasoningPrefix" class="text_pole flex1" placeholder="<think>" title="Opening tag for reasoning content" />
+            </div>
+
+            <div class="flex-container alignitemscenter">
+                <small><strong>Reasoning Suffix Tag:</strong></small>
+                <input type="text" id="ccReasoningSuffix" class="text_pole flex1" placeholder="</think>" title="Closing tag for reasoning content" />
+            </div>
+
+            <div class="flex-container alignitemscenter flexFlowColumn">
+                <small><strong>Reasoning System Prompt:</strong> (Optional - uses your preset's Custom COT by default)</small>
+                <textarea id="ccReasoningSystemPrompt" class="text_pole textarea_compact autoSetHeight wide100p" rows="4" title="System prompt to guide the reasoning model. Leave default to use your preset's Custom COT configuration."></textarea>
+            </div>
+
+            <hr>
+            <h4>Behavior Settings</h4>
+
+            <div class="flex-container checkbox">
+                <input type="checkbox" id="ccOnlyTriggerWhenUserLast" class="checkbox" value="true" title="When checked, the extension will only trigger when the last message in chat is from User.">
+                <label for="ccOnlyTriggerWhenUserLast">Only trigger when User is last in Chat</label>
+            </div>
+
+            <div class="flex-container checkbox">
+                <input type="checkbox" id="ccAutoContinueAfterReasoning" class="checkbox" value="true" title="Automatically continue to generate the response after reasoning is complete.">
+                <label for="ccAutoContinueAfterReasoning">Auto-Continue with Response After Reasoning</label>
+            </div>
+
+            <div class="flex-container checkbox">
+                <input type="checkbox" id="ccIncludeReasoningInResponse" class="checkbox" value="true" title="Include the reasoning content visibly in the final message.">
+                <label for="ccIncludeReasoningInResponse">Include Reasoning in Final Response (visible)</label>
+            </div>
+
+            <hr>
+            <small class="flex-container">
+                <span class="flex-container alignitemscenter">
+                    <strong>Slash Commands:</strong>
+                    <ul style="margin-top: 5px;">
+                        <li><code>/CCRP-toggle</code> - Toggle extension on/off</li>
+                        <li><code>/CCRP-swapToReasoning</code> - Manually swap to reasoning profile</li>
+                        <li><code>/CCRP-swapToResponse</code> - Manually swap to response profile</li>
+                    </ul>
+                </span>
+            </small>
+
+        </div>
+    </div>
+</div>
+

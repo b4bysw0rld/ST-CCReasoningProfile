@@ -1,0 +1,13 @@
+# Exclude development versions with -cc suffix
+*-cc.js
+*-cc.html
+*-cc.json
+*-CC.md
+
+# Exclude old Text Completion version files if they exist
+# (only if you want to keep this repo clean for CC version only)
+# Uncomment if needed:
+# index.js.old
+# manifest.json.old
+# settings.html.old
+
