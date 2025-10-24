@@ -401,7 +401,7 @@ function toggleExtensionState(state) {
 //MARK: onDOMReady
 (async function () {
     console.log(`${LOG_PREFIX} Chat Completion Reasoning extension loading...`);
-    const settingsHtml = await $.get(`${EXTENSION_PATH}/settings-cc.html`);
+    const settingsHtml = await $.get(`${EXTENSION_PATH}/settings.html`);
     $('#extensions_settings').append(settingsHtml);
 
     const $extensionSelector = $('#ccReasoningProfileSelector');
