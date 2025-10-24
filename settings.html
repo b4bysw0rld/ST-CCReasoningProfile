@@ -10,48 +10,11 @@
 
         <div class="inline-drawer-content">
 
-            <small class="flex-container">
-                <span class="flex-container alignitemscenter">
-                    <span class="alignitemscenter">
-                        💰 <strong>Save 60-80% on API costs!</strong> Use cheap models (Gemini) for reasoning, premium (Claude) for responses.
-                        ⚡ <strong>Get faster responses!</strong> Route reasoning to faster APIs/models.
-                    </span>
-                    <br>
-                    <span class="alignitemscenter">
-                        Works with your existing Chat Completion preset's Custom COT configuration.
-                        Full setup: See GETTING_STARTED.md or README-CC.md.
-                    </span>
-                </span>
-            </small>
-
             <hr>
 
             <div class="flex-container alignitemscenter">
-                <small><strong>Reasoning Profile:</strong> (Use a cheap/fast model like Gemini 2.5 Pro)</small>
-                <select id="ccReasoningProfileSelector" class="text_pole flex1 wide100p" placeholder="Select profile for Reasoning" value="" title="This Profile will be used for the Reasoning/Thinking step. Use a cheaper model here (e.g., Gemini 2.5 Pro) to save costs!"></select>
-            </div>
-
-            <hr>
-            <h4>Reasoning Settings</h4>
-
-            <div class="flex-container alignitemscenter">
-                <small><strong>Max Reasoning Tokens:</strong></small>
-                <input type="number" id="ccMaxReasoningTokens" class="text_pole" min="100" max="4000" step="50" title="Maximum tokens for the reasoning generation" />
-            </div>
-
-            <div class="flex-container alignitemscenter">
-                <small><strong>Reasoning Prefix Tag:</strong></small>
-                <input type="text" id="ccReasoningPrefix" class="text_pole flex1" placeholder="<think>" title="Opening tag for reasoning content" />
-            </div>
-
-            <div class="flex-container alignitemscenter">
-                <small><strong>Reasoning Suffix Tag:</strong></small>
-                <input type="text" id="ccReasoningSuffix" class="text_pole flex1" placeholder="</think>" title="Closing tag for reasoning content" />
-            </div>
-
-            <div class="flex-container alignitemscenter flexFlowColumn">
-                <small><strong>Reasoning System Prompt:</strong> (Optional - uses your preset's Custom COT by default)</small>
-                <textarea id="ccReasoningSystemPrompt" class="text_pole textarea_compact autoSetHeight wide100p" rows="4" title="System prompt to guide the reasoning model. Leave default to use your preset's Custom COT configuration."></textarea>
+                <small><strong>Reasoning Profile:</strong></small>
+                <select id="ccReasoningProfileSelector" class="text_pole flex1 wide100p" placeholder="Select profile for Reasoning" value="" title="This Profile will be used for the Reasoning/Thinking step."></select>
             </div>
 
             <hr>

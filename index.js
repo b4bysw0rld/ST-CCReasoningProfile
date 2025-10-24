@@ -55,11 +55,7 @@ function initExtSettings() {
     extension_settings.ccReasoning.autoContinueAfterReasoning = extension_settings.ccReasoning.autoContinueAfterReasoning || true;
     extension_settings.ccReasoning.onlyTriggerWhenUserLast = extension_settings.ccReasoning.onlyTriggerWhenUserLast || false;
     extension_settings.ccReasoning.isExtensionActive = extension_settings.ccReasoning.isExtensionActive || false;
-    extension_settings.ccReasoning.reasoningPrefix = extension_settings.ccReasoning.reasoningPrefix || '<think>\n';
-    extension_settings.ccReasoning.reasoningSuffix = extension_settings.ccReasoning.reasoningSuffix || '\n</think>';
-    extension_settings.ccReasoning.reasoningSystemPrompt = extension_settings.ccReasoning.reasoningSystemPrompt || 'Think step-by-step about the conversation so far and the user\'s latest message. Provide your chain of thought reasoning inside <think> tags. Be thorough but concise.';
     extension_settings.ccReasoning.includeReasoningInResponse = extension_settings.ccReasoning.includeReasoningInResponse || true;
-    extension_settings.ccReasoning.maxReasoningTokens = extension_settings.ccReasoning.maxReasoningTokens || 500;
 }
 
 function getExtSettings() {
@@ -217,15 +213,23 @@ async function swapToOriginalProfile() {
 }
 
 // Extract reasoning content from response
+// Uses SillyTavern's preset COT tags automatically
 function extractReasoningContent(text) {
-    const prefix = extension_settings.ccReasoning.reasoningPrefix || '<think>';
-    const suffix = extension_settings.ccReasoning.reasoningSuffix || '</think>';
+    // Common reasoning tag patterns
+    const patterns = [
+        { prefix: '<think>', suffix: '</think>' },
+        { prefix: '<thinking>', suffix: '</thinking>' },
+        { prefix: '<reasoning>', suffix: '</reasoning>' },
+        { prefix: '<thought>', suffix: '</thought>' }
+    ];
     
-    const prefixIndex = text.indexOf(prefix);
-    const suffixIndex = text.indexOf(suffix);
-    
-    if (prefixIndex !== -1 && suffixIndex !== -1 && suffixIndex > prefixIndex) {
-        return text.substring(prefixIndex + prefix.length, suffixIndex).trim();
+    for (const pattern of patterns) {
+        const prefixIndex = text.indexOf(pattern.prefix);
+        const suffixIndex = text.indexOf(pattern.suffix);
+        
+        if (prefixIndex !== -1 && suffixIndex !== -1 && suffixIndex > prefixIndex) {
+            return text.substring(prefixIndex + pattern.prefix.length, suffixIndex).trim();
+        }
     }
     
     // If no tags found, return the whole text as reasoning
@@ -234,24 +238,6 @@ function extractReasoningContent(text) {
 
 // Add reasoning to the context for the response
 function addReasoningToContext(reasoning) {
-    const context = getContext();
-    const chat = context.chat;
-    
-    if (!chat || chat.length === 0) return;
-    
-    // Store reasoning in a hidden way that can be accessed by the response generation
-    // We'll add it as a temporary system message or inject it into the prompt
-    const reasoningMessage = {
-        name: 'System',
-        is_system: true,
-        is_user: false,
-        mes: `${extension_settings.ccReasoning.reasoningPrefix}${reasoning}${extension_settings.ccReasoning.reasoningSuffix}`,
-        extra: {
-            type: 'reasoning',
-            hidden: !extension_settings.ccReasoning.includeReasoningInResponse
-        }
-    };
-    
     reasoningContent = reasoning;
     console.log(`${LOG_PREFIX} Reasoning content extracted and stored (${reasoning.length} chars)`);
 }
@@ -408,11 +394,7 @@ function toggleExtensionState(state) {
     const $activeToggle = $('#ccReasoningPowerButton');
     const $autoContinue = $('#ccAutoContinueAfterReasoning');
     const $onlyTriggerWhenUserLast = $('#ccOnlyTriggerWhenUserLast');
-    const $reasoningPrefix = $('#ccReasoningPrefix');
-    const $reasoningSuffix = $('#ccReasoningSuffix');
-    const $reasoningSystemPrompt = $('#ccReasoningSystemPrompt');
     const $includeReasoningInResponse = $('#ccIncludeReasoningInResponse');
-    const $maxReasoningTokens = $('#ccMaxReasoningTokens');
 
     settings = getExtSettings();
     let isAnySettingNull = false;
@@ -441,11 +423,7 @@ function toggleExtensionState(state) {
         $extensionSelector.val(settings.reasoningProfileID).trigger('change');
         $autoContinue.prop('checked', settings.autoContinueAfterReasoning);
         $onlyTriggerWhenUserLast.prop('checked', settings.onlyTriggerWhenUserLast);
-        $reasoningPrefix.val(settings.reasoningPrefix);
-        $reasoningSuffix.val(settings.reasoningSuffix);
-        $reasoningSystemPrompt.val(settings.reasoningSystemPrompt);
         $includeReasoningInResponse.prop('checked', settings.includeReasoningInResponse);
-        $maxReasoningTokens.val(settings.maxReasoningTokens);
         isExtensionActive = settings.isExtensionActive;
         activeConnectionProfileName = $connectionProfilesSelect.find('option:selected').text();
         console.log(`${LOG_PREFIX} On load, active connection profile is: ${activeConnectionProfileName}`);
@@ -476,28 +454,8 @@ function toggleExtensionState(state) {
         saveSettingsDebounced();
     });
 
-    $reasoningPrefix.off('change').on('change', (e) => {
-        extension_settings.ccReasoning.reasoningPrefix = $reasoningPrefix.val();
-        saveSettingsDebounced();
-    });
-
-    $reasoningSuffix.off('change').on('change', (e) => {
-        extension_settings.ccReasoning.reasoningSuffix = $reasoningSuffix.val();
-        saveSettingsDebounced();
-    });
-
-    $reasoningSystemPrompt.off('change').on('change', (e) => {
-        extension_settings.ccReasoning.reasoningSystemPrompt = $reasoningSystemPrompt.val();
-        saveSettingsDebounced();
-    });
-
     $includeReasoningInResponse.off('change').on('change', (e) => {
         extension_settings.ccReasoning.includeReasoningInResponse = $includeReasoningInResponse.prop('checked');
-        saveSettingsDebounced();
-    });
-
-    $maxReasoningTokens.off('change').on('change', (e) => {
-        extension_settings.ccReasoning.maxReasoningTokens = parseInt($maxReasoningTokens.val()) || 500;
         saveSettingsDebounced();
     });
 
