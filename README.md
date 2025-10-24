@@ -51,15 +51,13 @@ This extension is installed directly through SillyTavern using the extension ins
 Create at least two connection profiles in SillyTavern's Connection Manager:
 
 **Reasoning Profile:**
-- Uses your full character card and context (same as response profile)
+- Uses your full character card and context
 - Should include your Custom COT configuration in the preset
-- **Important:** Add a system prompt instruction to stop after thinking, e.g.:
-  ```
-  After providing your thinking in <think> tags, STOP IMMEDIATELY. 
-  Do not continue with a character response.
-  ```
-- Set Max Tokens appropriately in the extension (300-500 recommended)
-- This ensures the model only generates thinking, not a full response
+- **Important:** Add the Stop Instruction from the extension settings to your preset's system prompt
+  - The extension provides a customizable instruction (default: "After providing your thinking in <think> tags, STOP IMMEDIATELY.")
+  - Copy this from the extension settings and add it to your Reasoning Profile's system prompt
+  - This tells the model to stop after thinking
+- The Max Tokens setting provides a hard limit as backup
 
 **Response Profile:**
 - Your main chat profile with your preferred settings
@@ -98,6 +96,11 @@ Once configured, the extension works automatically:
 - **Max Reasoning Tokens**: Hard limit on reasoning generation (prevents continuing into full response)
   - Recommended: 300-500 tokens
   - This stops generation after thinking is complete
+  
+- **Stop Instruction**: Customizable instruction that tells the model to stop after reasoning
+  - Default: "After providing your thinking in <think> tags, STOP IMMEDIATELY. Do not continue with a character response."
+  - Copy this instruction and add it to your Reasoning Profile's preset system prompt
+  - Customize it for different COT styles (short/long) or models
 
 ### Behavior Options
 

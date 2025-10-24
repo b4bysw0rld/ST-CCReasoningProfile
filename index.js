@@ -57,6 +57,7 @@ function initExtSettings() {
     extension_settings.ccReasoning.isExtensionActive = extension_settings.ccReasoning.isExtensionActive || false;
     extension_settings.ccReasoning.includeReasoningInResponse = extension_settings.ccReasoning.includeReasoningInResponse || true;
     extension_settings.ccReasoning.maxReasoningTokens = extension_settings.ccReasoning.maxReasoningTokens || 500;
+    extension_settings.ccReasoning.stopInstruction = extension_settings.ccReasoning.stopInstruction || 'After providing your thinking in <think> tags, STOP IMMEDIATELY. Do not continue with a character response.';
 }
 
 function getExtSettings() {
@@ -397,6 +398,7 @@ function toggleExtensionState(state) {
     const $onlyTriggerWhenUserLast = $('#ccOnlyTriggerWhenUserLast');
     const $includeReasoningInResponse = $('#ccIncludeReasoningInResponse');
     const $maxReasoningTokens = $('#ccMaxReasoningTokens');
+    const $stopInstruction = $('#ccStopInstruction');
 
     settings = getExtSettings();
     let isAnySettingNull = false;
@@ -427,6 +429,7 @@ function toggleExtensionState(state) {
         $onlyTriggerWhenUserLast.prop('checked', settings.onlyTriggerWhenUserLast);
         $includeReasoningInResponse.prop('checked', settings.includeReasoningInResponse);
         $maxReasoningTokens.val(settings.maxReasoningTokens);
+        $stopInstruction.val(settings.stopInstruction);
         isExtensionActive = settings.isExtensionActive;
         activeConnectionProfileName = $connectionProfilesSelect.find('option:selected').text();
         console.log(`${LOG_PREFIX} On load, active connection profile is: ${activeConnectionProfileName}`);
@@ -464,6 +467,11 @@ function toggleExtensionState(state) {
 
     $maxReasoningTokens.off('change').on('change', (e) => {
         extension_settings.ccReasoning.maxReasoningTokens = parseInt($maxReasoningTokens.val()) || 500;
+        saveSettingsDebounced();
+    });
+
+    $stopInstruction.off('change').on('change', (e) => {
+        extension_settings.ccReasoning.stopInstruction = $stopInstruction.val();
         saveSettingsDebounced();
     });
 

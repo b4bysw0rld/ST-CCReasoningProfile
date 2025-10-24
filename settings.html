@@ -25,9 +25,10 @@
                 <input type="number" id="ccMaxReasoningTokens" class="text_pole" min="100" max="2000" step="50" value="500" title="Limits reasoning generation to prevent continuing into full response. Recommended: 300-500" />
             </div>
 
-            <small class="note">
-                <strong>Tip:</strong> Your Reasoning Profile should use your full character card and context, but add a system prompt instruction to stop after thinking (e.g., "After <think> tags, stop immediately. Do not continue with a response."). The Max Tokens setting provides a hard limit.
-            </small>
+            <div class="flex-container alignitemscenter flexFlowColumn">
+                <small><strong>Stop Instruction:</strong> (Injected during reasoning to prevent full response)</small>
+                <textarea id="ccStopInstruction" class="text_pole textarea_compact autoSetHeight wide100p" rows="2" placeholder="After providing your thinking in <think> tags, STOP IMMEDIATELY. Do not continue with a character response." title="This instruction is injected into the system prompt during reasoning generation to stop the model after thinking."></textarea>
+            </div>
 
             <hr>
             <h4>Behavior Settings</h4>
